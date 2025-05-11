@@ -43,7 +43,7 @@ export function usePersistedState<T>(
       const item = storage.getItem(storageKey);
       return item ? deserialize(item) : initialValue;
     } catch (error) {
-      console.error("Error reading from storage:", error);
+      console.error("[usePersistedState] Error reading from storage:", error);
       return initialValue;
     }
   });
@@ -53,7 +53,7 @@ export function usePersistedState<T>(
       storage.setItem(storageKey, serialize(value));
       setState(value);
     } catch (error) {
-      console.error("Error writing to storage:", error);
+      console.error("[usePersistedState] Error writing to storage:", error);
     }
   };
 
