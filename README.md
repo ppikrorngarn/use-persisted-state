@@ -160,8 +160,10 @@ function ThemeSwitcherNative() {
 - `key: string` — The key to persist under.
 - `initialValue: T` — The initial state value.
 - `options?: { namespace?: string; storage?: StorageProviderInterface; serialize?: (value: T) => string; deserialize?: (raw: string) => T; }`
-- `namespace` — Optional prefix for the key. Defaults to `"(default)"`
-- `storage` — Optional storage provider. Defaults to `localStorage` (if available).
+  - `namespace` — Optional prefix for the key. Defaults to `"(default)"`
+  - `storage` — Optional storage provider. Defaults to `localStorage` (if available).
+  - `serialize` — Optional custom serializer function. Defaults to `JSON.stringify`.
+  - `deserialize` — Optional custom deserializer function. Defaults to `JSON.parse`.
 
 Returns `[state, setState]` — just like `useState`.
 
