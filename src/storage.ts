@@ -1,3 +1,5 @@
+import { BASE_STORAGE_KEY } from "./constants";
+
 export interface StorageProviderInterface {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;
@@ -11,7 +13,7 @@ const NOOP_STORAGE_PROVIDER: StorageProviderInterface = {
 };
 
 export function createStorageKey(key: string, namespace: string): string {
-  return `${namespace}:${key}`;
+  return `${BASE_STORAGE_KEY}:${namespace}:${key}`;
 }
 
 function isStorageProviderInterface(obj: any): obj is StorageProviderInterface {

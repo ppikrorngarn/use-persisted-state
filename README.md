@@ -25,7 +25,7 @@ import usePersistedState from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcher() {
   const [theme, setTheme] = usePersistedState("theme", "light");
-  // Persists to key: "ups:theme"
+  // Persists to key: "persist:(default):theme"
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -46,7 +46,7 @@ function ThemeSwitcherWithNamespace() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
     namespace: "settings",
   });
-  // Persists to key: "settings:theme"
+  // Persists to key: "persist:settings:theme"
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
@@ -160,7 +160,7 @@ function ThemeSwitcherNative() {
 - `key: string` — The key to persist under.
 - `initialValue: T` — The initial state value.
 - `options?: { namespace?: string; storage?: StorageProviderInterface; }`
-- `namespace` — Optional prefix for the key. Defaults to `"ups"` (Short for `"use-persisted-state"`)
+- `namespace` — Optional prefix for the key. Defaults to `"(default)"`
 - `storage` — Optional storage provider. Defaults to `localStorage` (if available).
 
 Returns `[state, setState]` — just like `useState`.
