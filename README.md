@@ -21,7 +21,7 @@ npm install @piyawasin/use-persisted-state
 ### Basic Example: Theme Switcher
 
 ```tsx
-import usePersistedState from "@piyawasin/use-persisted-state";
+import { usePersistedState } from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcher() {
   const [theme, setTheme] = usePersistedState("theme", "light");
@@ -40,7 +40,7 @@ function ThemeSwitcher() {
 ### With custom namespace
 
 ```tsx
-import usePersistedState from "@piyawasin/use-persisted-state";
+import { usePersistedState } from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcherWithNamespace() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
@@ -61,7 +61,7 @@ function ThemeSwitcherWithNamespace() {
 ### With sessionStorage
 
 ```tsx
-import usePersistedState from "@piyawasin/use-persisted-state";
+import { usePersistedState } from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcherSession() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
@@ -81,7 +81,8 @@ function ThemeSwitcherSession() {
 ### With custom storage provider
 
 ```tsx
-import usePersistedState, {
+import {
+  usePersistedState,
   type StorageProviderInterface,
 } from "@piyawasin/use-persisted-state";
 
@@ -118,7 +119,8 @@ function ThemeSwitcherCustomStorage() {
 You can use this hook in React Native by providing a custom storage provider based on `@react-native-async-storage/async-storage`:
 
 ```tsx
-import usePersistedState, {
+import {
+  usePersistedState,
   type StorageProviderInterface,
 } from "@piyawasin/use-persisted-state";
 import AsyncStorage from "@react-native-async-storage/async-storage";

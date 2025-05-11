@@ -27,7 +27,7 @@ function resolveStorageOption(
   return resolveStorageProvider(storage);
 }
 
-export default function usePersistedState<T>(
+export function usePersistedState<T>(
   key: string,
   initialValue: T,
   options?: UsePersistedStateOptions
