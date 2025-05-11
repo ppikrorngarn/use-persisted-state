@@ -28,6 +28,10 @@ function isStorageProviderInterface(obj: any): obj is StorageProviderInterface {
 export function resolveStorageProvider(
   customStorage?: StorageProviderInterface
 ): StorageProviderInterface {
+  if (typeof window === "undefined" && typeof customStorage === "undefined") {
+    return NOOP_STORAGE_PROVIDER;
+  }
+
   if (customStorage) {
     if (isStorageProviderInterface(customStorage)) {
       return customStorage;
@@ -38,7 +42,7 @@ export function resolveStorageProvider(
     }
   }
 
-  if (typeof window !== "undefined" && window.localStorage) {
+  if (window.localStorage) {
     return window.localStorage;
   }
 
