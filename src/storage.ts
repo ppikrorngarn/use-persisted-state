@@ -10,6 +10,10 @@ export const NOOP_STORAGE_PROVIDER: StorageProviderInterface = {
   removeItem: () => {},
 };
 
+export function createStorageKey(key: string, namespace: string): string {
+  return `${namespace}:${key}`;
+}
+
 function isStorageProviderInterface(obj: any): obj is StorageProviderInterface {
   return (
     obj &&

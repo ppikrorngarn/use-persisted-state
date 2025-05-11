@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { StorageProviderInterface, resolveStorageProvider } from "./storage";
+import {
+  StorageProviderInterface,
+  createStorageKey,
+  resolveStorageProvider,
+} from "./storage";
 import { DEFAULT_NAMESPACE } from "./constants";
 
 export interface UsePersistedStateOptions {
@@ -29,10 +33,6 @@ function resolveDeserializeOption<T>(
   deserialize?: (raw: string) => T
 ): (raw: string) => T {
   return deserialize ?? ((raw: string) => JSON.parse(raw));
-}
-
-function createStorageKey(key: string, namespace: string): string {
-  return `${namespace}:${key}`;
 }
 
 export function usePersistedState<T>(
