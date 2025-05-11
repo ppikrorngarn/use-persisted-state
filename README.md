@@ -181,6 +181,10 @@ interface StorageProviderInterface {
 
 If no valid storage is available, the hook logs a warning and falls back to a no-op provider (nothing is persisted).
 
+## Comparison to `redux-persist`
+
+While libraries like `redux-persist` are great for persisting entire Redux stores, sometimes you just want to persist a handful of values—like a theme, a language preference, or a form draft—without the complexity of global state management. `usePersistedState` is designed for these cases: it's intuitive, minimal, and lets you persist state with the same API as `useState`.
+
 ## Serialization
 
 **Important:** All data passed to `usePersistedState` must be serializable by `JSON.stringify` and deserializable by `JSON.parse`. This means:
