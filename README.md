@@ -21,7 +21,7 @@ npm install use-persisted-state
 ### Basic Example: Theme Switcher
 
 ```tsx
-import { usePersistedState } from "@piyawasin/use-persisted-state";
+import usePersistedState from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcher() {
   const [theme, setTheme] = usePersistedState("theme", "light");
@@ -40,7 +40,7 @@ function ThemeSwitcher() {
 ### With custom namespace
 
 ```tsx
-import { usePersistedState } from "@piyawasin/use-persisted-state";
+import usePersistedState from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcherWithNamespace() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
@@ -61,7 +61,7 @@ function ThemeSwitcherWithNamespace() {
 ### With sessionStorage
 
 ```tsx
-import { usePersistedState } from "@piyawasin/use-persisted-state";
+import usePersistedState from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcherSession() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
@@ -81,9 +81,8 @@ function ThemeSwitcherSession() {
 ### With custom storage provider
 
 ```tsx
-import {
-  usePersistedState,
-  StorageProviderInterface,
+import usePersistedState, {
+  type StorageProviderInterface,
 } from "@piyawasin/use-persisted-state";
 
 const memoryStorage: StorageProviderInterface = {
@@ -119,9 +118,8 @@ function ThemeSwitcherCustomStorage() {
 You can use this hook in React Native by providing a custom storage provider based on `@react-native-async-storage/async-storage`:
 
 ```tsx
-import {
-  usePersistedState,
-  StorageProviderInterface,
+import usePersistedState, {
+  type StorageProviderInterface,
 } from "@piyawasin/use-persisted-state";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -196,7 +194,7 @@ If no valid storage is available, the hook logs a warning and falls back to a no
 If you want to persist data that is not directly supported by JSON (such as `Date`, `Map`, `Set`, or custom classes), you can pass custom `serialize` and `deserialize` functions to the hook:
 
 ```tsx
-import { usePersistedState } from "@piyawasin/use-persisted-state";
+import usePersistedState from "@piyawasin/use-persisted-state";
 
 // Example: Persisting a Date object
 const [date, setDate] = usePersistedState<Date>("my-date", new Date(), {

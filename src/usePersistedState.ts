@@ -10,12 +10,12 @@ import {
 } from "./serialization";
 import { DEFAULT_NAMESPACE } from "./constants";
 
-export interface UsePersistedStateOptions {
+export type UsePersistedStateOptions = {
   namespace?: string;
   storage?: StorageProviderInterface;
   serialize?: <T>(value: T) => string;
   deserialize?: <T>(raw: string) => T;
-}
+};
 
 function resolveNamespaceOption(namespace?: string): string {
   return namespace || DEFAULT_NAMESPACE;
@@ -27,7 +27,7 @@ function resolveStorageOption(
   return resolveStorageProvider(storage);
 }
 
-export function usePersistedState<T>(
+function usePersistedState<T>(
   key: string,
   initialValue: T,
   options?: UsePersistedStateOptions
@@ -59,3 +59,5 @@ export function usePersistedState<T>(
 
   return [state, setValue];
 }
+
+export default usePersistedState;

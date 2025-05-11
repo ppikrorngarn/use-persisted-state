@@ -4,7 +4,7 @@ export interface StorageProviderInterface {
   removeItem(key: string): void;
 }
 
-export const NOOP_STORAGE_PROVIDER: StorageProviderInterface = {
+const NOOP_STORAGE_PROVIDER: StorageProviderInterface = {
   getItem: () => null,
   setItem: () => {},
   removeItem: () => {},
