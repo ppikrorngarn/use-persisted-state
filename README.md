@@ -213,6 +213,10 @@ const [map, setMap] = usePersistedState<Map<string, number>>(
 );
 ```
 
+## Disclaimer
+
+This library, originally developed for personal use, is being distributed on an "as-is" basis. The creator makes no warranties or guarantees regarding its performance, functionality, or suitability for any specific application.
+
 ## License
 
 MIT
