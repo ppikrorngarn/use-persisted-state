@@ -217,6 +217,64 @@ const [map, setMap] = usePersistedState<Map<string, number>>(
 );
 ```
 
+---
+
+## Higher-Order Hook: Pre-configuring usePersistedState
+
+You can create a custom version of `usePersistedState` with certain options (like `namespace`, `serialize`, or `deserialize`) pre-filled. This is similar to a higher-order component (HOC) pattern, but for hooks. It allows you to DRY up your code and avoid repeating options everywhere.
+
+### Example: Factory for Namespaced State
+
+```tsx
+import usePersistedState from "@piyawasin/use-persisted-state";
+
+function createNamespacedPersistedState(namespace: string) {
+  return function useNamespacedPersistedState<T>(
+    key: string,
+    initialValue: T,
+    options = {}
+  ) {
+    return usePersistedState(key, initialValue, { ...options, namespace });
+  };
+}
+
+// Usage
+const useSettingsState = createNamespacedPersistedState("settings");
+const [theme, setTheme] = useSettingsState("theme", "light");
+```
+
+### Example: Factory with Custom Serialization
+
+```tsx
+import usePersistedState from "@piyawasin/use-persisted-state";
+
+function createCustomSerializedState<T>(
+  serialize: (value: T) => string,
+  deserialize: (raw: string) => T
+) {
+  return function useCustomSerializedState(
+    key: string,
+    initialValue: T,
+    options = {}
+  ) {
+    return usePersistedState(key, initialValue, {
+      ...options,
+      serialize,
+      deserialize,
+    });
+  };
+}
+
+// Usage for Dates
+const useDateState = createCustomSerializedState<Date>(
+  (date) => date.toISOString(),
+  (raw) => new Date(raw)
+);
+const [date, setDate] = useDateState("my-date", new Date());
+```
+
+This pattern is especially useful if you have multiple pieces of state that should share the same namespace or serialization logic.
+
 ## Disclaimer
 
 This library, originally developed for personal use, is being distributed on an "as-is" basis. The creator makes no warranties or guarantees regarding its performance, functionality, or suitability for any specific application.
