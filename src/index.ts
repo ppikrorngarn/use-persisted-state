@@ -19,12 +19,16 @@ export interface UsePersistedStateOptions {
   storage?: StorageProviderInterface;
 }
 
+const DEFAULT_NAMESPACE = "ups"; // Short for "Use Persisted State"
+
 export function usePersistedState<T>(
   key: string,
   initialValue: T,
   options?: UsePersistedStateOptions
 ): [T, (value: T) => void] {
-  const storageKey = options?.namespace ? `${options.namespace}:${key}` : key;
+  const namespace = options?.namespace || DEFAULT_NAMESPACE;
+  const storageKey = `${namespace}:${key}`;
+
   let storage: StorageProviderInterface | undefined =
     options?.storage ||
     (typeof window !== "undefined" ? window.localStorage : undefined);
