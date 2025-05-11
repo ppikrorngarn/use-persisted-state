@@ -183,6 +183,38 @@ interface StorageProviderInterface {
 
 If no valid storage is available, the hook logs a warning and falls back to a no-op provider (nothing is persisted).
 
+## Serialization
+
+**Important:** All data passed to `usePersistedState` must be serializable by `JSON.stringify` and deserializable by `JSON.parse`. This means:
+
+- Do not use functions, symbols, or non-serializable objects as state.
+- Most plain objects, arrays, numbers, strings, and booleans are supported.
+- If you need to persist more complex data, you can provide a custom serialization/deserialization mechanism using the `serialize` and `deserialize` options.
+
+### Custom Serialization Example
+
+If you want to persist data that is not directly supported by JSON (such as `Date`, `Map`, `Set`, or custom classes), you can pass custom `serialize` and `deserialize` functions to the hook:
+
+```tsx
+import { usePersistedState } from "@piyawasin/use-persisted-state";
+
+// Example: Persisting a Date object
+const [date, setDate] = usePersistedState<Date>("my-date", new Date(), {
+  serialize: (value) => value.toISOString(),
+  deserialize: (raw) => new Date(raw),
+});
+
+// Example: Persisting a Map
+const [map, setMap] = usePersistedState<Map<string, number>>(
+  "my-map",
+  new Map(),
+  {
+    serialize: (value) => JSON.stringify([...value.entries()]),
+    deserialize: (raw) => new Map(JSON.parse(raw)),
+  }
+);
+```
+
 ## License
 
 MIT

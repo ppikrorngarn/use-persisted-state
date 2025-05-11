@@ -5,10 +5,30 @@ import { DEFAULT_NAMESPACE } from "./constants";
 export interface UsePersistedStateOptions {
   namespace?: string;
   storage?: StorageProviderInterface;
+  serialize?: <T>(value: T) => string;
+  deserialize?: <T>(raw: string) => T;
 }
 
-function resolveNamespace(customNamespace?: string): string {
-  return customNamespace || DEFAULT_NAMESPACE;
+function resolveNamespaceOption(namespace?: string): string {
+  return namespace || DEFAULT_NAMESPACE;
+}
+
+function resolveStorageOption(
+  storage?: StorageProviderInterface
+): StorageProviderInterface {
+  return resolveStorageProvider(storage);
+}
+
+function resolveSerializeOption<T>(
+  serialize?: (value: T) => string
+): (value: T) => string {
+  return serialize ?? JSON.stringify;
+}
+
+function resolveDeserializeOption<T>(
+  deserialize?: (raw: string) => T
+): (raw: string) => T {
+  return deserialize ?? ((raw: string) => JSON.parse(raw));
 }
 
 function createStorageKey(key: string, namespace: string): string {
@@ -20,14 +40,16 @@ export function usePersistedState<T>(
   initialValue: T,
   options?: UsePersistedStateOptions
 ): [T, (value: T) => void] {
-  const namespace = resolveNamespace(options?.namespace);
-  const storage = resolveStorageProvider(options?.storage);
+  const namespace = resolveNamespaceOption(options?.namespace);
+  const storage = resolveStorageOption(options?.storage);
   const storageKey = createStorageKey(key, namespace);
+  const serialize = resolveSerializeOption<T>(options?.serialize);
+  const deserialize = resolveDeserializeOption<T>(options?.deserialize);
 
   const [state, setState] = useState<T>(() => {
     try {
       const item = storage.getItem(storageKey);
-      return item ? JSON.parse(item) : initialValue;
+      return item ? deserialize(item) : initialValue;
     } catch (error) {
       console.error("Error reading from storage:", error);
       return initialValue;
@@ -36,7 +58,7 @@ export function usePersistedState<T>(
 
   const setValue = (value: T) => {
     try {
-      storage.setItem(storageKey, JSON.stringify(value));
+      storage.setItem(storageKey, serialize(value));
       setState(value);
     } catch (error) {
       console.error("Error writing to storage:", error);
