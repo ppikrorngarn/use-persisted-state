@@ -18,10 +18,28 @@
     "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "react",
+    "hook",
+    "state",
+    "persist",
+    "localStorage",
+    "sessionStorage",
+    "typescript",
+    "custom storage",
+    "react native"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ppikrorngarn/use-persisted-state.git"
+  },
+  "author": "Piyawasin Pikror-ngarn",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "description": "A tiny, flexible React hook for persisting state to localStorage, sessionStorage, or custom storage providers. Can be used with React Native via the custom storage option. Supports namespacing, pluggable storage, and SSR-safe fallbacks.",
   "devDependencies": {
     "@types/node": "^22.15.17",
     "@types/react": "^19.1.3",
