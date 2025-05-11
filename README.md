@@ -4,16 +4,16 @@ A tiny, flexible React hook for persisting state to localStorage, sessionStorage
 
 ## Features
 
-- Persist React state to `localStorage` (default), `sessionStorage`, or any custom storage.
-- Optional key namespacing (with a default, short namespace).
-- Fully typed with TypeScript.
-- SSR-safe: falls back to noop storage if not in a browser.
-- Custom storage provider support for advanced use cases/testing.
+- Fully typed with TypeScript for a seamless developer experience.
+- Persist React state to `localStorage` (default), `sessionStorage`, or any custom storage provider.
+- Safe for server-side rendering (SSR): automatically falls back to noop storage when not in a browser.
+- Easily customize key namespacing and serialization/deserialization as needed.
+- Advanced: Plug in your own storage provider for testing or non-standard environments.
 
 ## Installation
 
 ```bash
-npm install use-persisted-state
+npm install @piyawasin/use-persisted-state
 ```
 
 ## Usage
@@ -65,7 +65,7 @@ import usePersistedState from "@piyawasin/use-persisted-state";
 
 function ThemeSwitcherSession() {
   const [theme, setTheme] = usePersistedState("theme", "light", {
-    storage: sessionStorage,
+    storage: window.sessionStorage,
   });
   return (
     <button
@@ -159,7 +159,7 @@ function ThemeSwitcherNative() {
 
 - `key: string` — The key to persist under.
 - `initialValue: T` — The initial state value.
-- `options?: { namespace?: string; storage?: StorageProviderInterface; }`
+- `options?: { namespace?: string; storage?: StorageProviderInterface; serialize?: (value: T) => string; deserialize?: (raw: string) => T; }`
 - `namespace` — Optional prefix for the key. Defaults to `"(default)"`
 - `storage` — Optional storage provider. Defaults to `localStorage` (if available).
 
