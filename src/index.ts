@@ -4,6 +4,10 @@ import {
   createStorageKey,
   resolveStorageProvider,
 } from "./storage";
+import {
+  resolveSerializeOption,
+  resolveDeserializeOption,
+} from "./serialization";
 import { DEFAULT_NAMESPACE } from "./constants";
 
 export interface UsePersistedStateOptions {
@@ -21,18 +25,6 @@ function resolveStorageOption(
   storage?: StorageProviderInterface
 ): StorageProviderInterface {
   return resolveStorageProvider(storage);
-}
-
-function resolveSerializeOption<T>(
-  serialize?: (value: T) => string
-): (value: T) => string {
-  return serialize ?? JSON.stringify;
-}
-
-function resolveDeserializeOption<T>(
-  deserialize?: (raw: string) => T
-): (raw: string) => T {
-  return deserialize ?? ((raw: string) => JSON.parse(raw));
 }
 
 export function usePersistedState<T>(
