@@ -27,7 +27,7 @@ function resolveStorageOption(
   return resolveStorageProvider(storage);
 }
 
-function usePersistedState<T>(
+export default function usePersistedState<T>(
   key: string,
   initialValue: T,
   options?: UsePersistedStateOptions
@@ -59,5 +59,3 @@ function usePersistedState<T>(
 
   return [state, setValue];
 }
-
-export default usePersistedState;
