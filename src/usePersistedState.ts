@@ -9,6 +9,7 @@ import {
   resolveDeserializeOption,
 } from "./serialization";
 import { DEFAULT_NAMESPACE } from "./constants";
+import { logError } from "./logError";
 
 export type UsePersistedStateOptions = {
   namespace?: string;
@@ -43,7 +44,7 @@ export function usePersistedState<T>(
       const item = storage.getItem(storageKey);
       return item ? deserialize(item) : initialValue;
     } catch (error) {
-      console.error("[usePersistedState] Error reading from storage:", error);
+      logError("Error reading from storage:", error);
       return initialValue;
     }
   });
@@ -54,7 +55,7 @@ export function usePersistedState<T>(
         storage.setItem(storageKey, serialize(value));
         setState(value);
       } catch (error) {
-        console.error("[usePersistedState] Error writing to storage:", error);
+        logError("Error writing to storage:", error);
       }
     },
     [storage, storageKey, serialize, setState]

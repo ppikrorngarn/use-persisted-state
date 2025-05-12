@@ -1,4 +1,5 @@
 import { BASE_STORAGE_KEY } from "./constants";
+import { logError } from "./logError";
 
 export interface StorageProviderInterface {
   getItem(key: string): string | null;
@@ -36,8 +37,8 @@ export function resolveStorageProvider(
     if (isStorageProviderInterface(customStorage)) {
       return customStorage;
     } else {
-      console.error(
-        "[usePersistedState] Provided customStorage does not conform to StorageProviderInterface. Falling back to default."
+      logError(
+        "Provided customStorage does not conform to StorageProviderInterface. Falling back to default."
       );
     }
   }
@@ -46,8 +47,8 @@ export function resolveStorageProvider(
     return window.localStorage;
   }
 
-  console.error(
-    "[usePersistedState] No valid storage provider found: persistence will not work. Please provide a valid storage option or ensure window.localStorage is available."
+  logError(
+    "No valid storage provider found: persistence will not work. Please provide a valid storage option or ensure window.localStorage is available."
   );
   return NOOP_STORAGE_PROVIDER;
 }
