@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "ESNext",
+    "target": "ES5",
+    "module": "CommonJS",
     "declaration": true,
     "declarationDir": "dist/types",
     "outDir": "dist/esm",
