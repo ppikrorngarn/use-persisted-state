@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   StorageProviderInterface,
   createStorageKey,
@@ -48,14 +48,17 @@ export function usePersistedState<T>(
     }
   });
 
-  const setValue = (value: T) => {
-    try {
-      storage.setItem(storageKey, serialize(value));
-      setState(value);
-    } catch (error) {
-      console.error("[usePersistedState] Error writing to storage:", error);
-    }
-  };
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        storage.setItem(storageKey, serialize(value));
+        setState(value);
+      } catch (error) {
+        console.error("[usePersistedState] Error writing to storage:", error);
+      }
+    },
+    [storage, storageKey, serialize, setState]
+  );
 
   return [state, setValue];
 }
